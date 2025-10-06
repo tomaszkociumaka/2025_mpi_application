@@ -1,0 +1,75 @@
+
+\documentclass[11pt,a4paper,sans]{moderncv}
+% moderncv themes
+\moderncvstyle{classic}                            
+\moderncvcolor{black}                             
+\usepackage[margin=25mm]{geometry}
+\setlength{\footskip}{136.00005pt}                 % depending on the amount of information in the footer, you need to change this value. comment this line out and set it to the size given in the warning
+%\setlength{\hintscolumnwidth}{3cm}                % if you want to change the width of the column with the dates
+%\setlength{\makecvheadnamewidth}{10cm}            % for the 'classic' style, if you want to force the width allocated to your name and avoid line breaks. be careful though, the length is normally calculated to avoid any overlap with your personal info; use this at your own typographical risks...
+
+\usepackage{etoolbox}% http://ctan.org/pkg/etoolbox
+\makeatletter
+\patchcmd{\makeletterhead}% <cmd>
+  {\raggedright \@opening}% <search>
+  {\@opening}% <replace>
+  {}{}% <success><failure>
+\makeatother
+
+\usepackage{ulem}
+
+\ifxetexorluatex
+  \usepackage{fontspec}
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Ligatures=TeX}
+  \setmainfont{Latin Modern Roman}
+  \setsansfont{Latin Modern Sans}
+  \setmonofont{Latin Modern Mono}
+  \setmathfont{Latin Modern Math} 
+\else
+  \usepackage[T1]{fontenc}
+  \usepackage{lmodern}
+\fi
+
+% personal data
+ \name{Tomasz}{Kociumaka}
+ \title{\vphantom{Title}}                              
+ \address{Petrusstr. 23}{66125 Saarbrücken, Germany}{}
+ \phone[mobile]{+49~15204037311}             
+ \email{tomasz.kociumaka@mpi-inf.mpg.de}   
+ \extrainfo{%\emailsymbol\emaillink{kociumaka@mimuw.edu.pl} 
+ \emailsymbol\emaillink{tomasz.kociumaka@gmail.com} \\ \homepagesymbol\link{https://mimuw.edu.pl/\textasciitilde kociumaka}}
+       
+
+ 
+
+\begin{document}
+\recipient{\vspace{-1.5cm}Max Planck Society}{
+General Administration\\ Hofgartenstr. 8\\
+80539 Munich, Germany}
+\date{October 14th, 2025}
+\opening{Dear Members of the Selection Committee,}
+\subject{Application for a Max Planck Research Group: Cover Letter}
+\closing{Sincerely,}
+\enclosure[Attached]{\begin{enumerate}\item CV \item list of publications \item research summary \item research proposal \item copies of three most important papers \end{enumerate}}          % use an optional argument to use a string other than "Enclosure", or redefine \enclname
+\makelettertitle
+
+I am writing to apply for the Max Planck Research Group Leader position. I received my Ph.D. in Computer Science from the University of Warsaw in September 2019. Since then, I have held research positions at Bar-Ilan University (Israel), the University of California, Berkeley (USA), the Max Planck Institute for Informatics (Saarbrücken, Germany), and the Institute for Computer Science, Artificial Intelligence and Technology (Sofia, Bulgaria). Earlier this year, I rejoined MPI Informatics as a group leader (E15) in the Algorithms \& Complexity Department led by Prof. Danupon Nanongkai.
+
+My research centers on \textbf{algorithms and data structures for processing strings} (texts, sequences). Although studied for more than five decades, string algorithms remain a vibrant field, where theoretical advances connect deeply with applications, particularly in data compression and bioinformatics.
+
+Over my career, I have co-authored more than 130 publications, including 38 papers in the flagship conferences of theoretical computer science (STOC, FOCS, SODA). My work has been cited over 2900 times, with an h-index of 31 (\underline{\href{https://scholar.google.com/citations?user=mudtARsAAAAJ}{Google
+ Scholar}}). In 2025, I was honored with the \underline{\href{https://eatcs.org/index.php/presburger}{\textbf{Presburger
+ Award}}}, recognizing my “breakthrough contributions to the field of string algorithms and data structures, solving long-standing open problems and developing near-linear time algorithms for a wide range of fundamental string problems, including pattern matching, repetitions, and compressed indexing.”
+
+The research program I am developing seeks to advance the algorithmic foundations of string processing, with a focus on three central problems: approximate pattern matching, edit distance, and text indexing. A Max Planck Research Group would provide the resources and intellectual environment necessary to pursue ambitious projects of greater scale and scope. In particular, it would enable me to recruit doctoral students, hire top postdoctoral researchers, and build a cohesive team around my agenda, complementing the network of external collaborators that I am currently heavily relying on.
+
+I am applying to base the group at the \textbf{Max Planck Institute for Informatics}, which hosts one of the world’s leading groups in algorithms and complexity. Saarland's exceptional concentration of computer science expertise, including adjacent areas such as formal languages and bioinformatics, offers a uniquely strong environment for collaboration and talent recruitment. I am confident that this setting will allow my group to thrive and contribute significantly to the Max Planck Society and the broader research community.
+
+Thank you for considering my application. I look forward to the opportunity to build and lead an independent Max Planck Research Group advancing the field of string algorithms and data structures.
+
+\makeletterclosing
+
+%\clearpage\end{CJK*}                              % if you are typesetting your resume in Chinese using CJKk; the \clearpage is required for fancyhdr to work correctly with CJK, though it kills the page numbering by making \lastpage undefined
+\end{document}
+
