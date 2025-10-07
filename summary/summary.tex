@@ -5,7 +5,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
 \usepackage[OT4]{fontenc}
-\usepackage{amsmath}
+\usepackage{amsmath,amssymb}
 \usepackage[dvipsnames]{xcolor}
 \usepackage{setspace}
 \usepackage{fontspec}
@@ -50,168 +50,13 @@
 {\bfseries {Research Summary}}
 \end{center}\vspace{-.25cm}
 
-Strings---sequences of characters over a given alphabet---are among the most ubiquitous data types: they encode natural-language texts, biological sequences, abstract computer files, and many more. 
-Although string algorithms have been studied for over five decades, the field remains vibrant, with substantial progress driven both by the broad theoretical computer science community and by the specialized ``\mbox{\emph{stringology}}'' community.
-The explosive growth of sequential data, particularly in bioinformatics, brings forth exciting research questions and motivates revisiting classical problems in new computational models.
-On the theory side, novel combinatorial insights and algorithmic techniques repeatedly help to resolve long-standing open questions.
+Strings—sequences of characters over an alphabet—are among the most fundamental data types. They underlie tasks as diverse as web search, genome analysis, and file storage. The overarching goal of my research program is to design efficient algorithms for processing such strings, with a particular focus on fundamental theoretical problems with strong practical motivation.
 
-My academic goal for the coming years is to lead a small group conducting cutting-edge research on algorithms and data structures for string processing.
-I believe I am well-prepared for this role: my results have been regularly published at top theory venues (STOC, FOCS, SODA), and I am recognized as one of the main contributors in the field.
-Over the years, I have also developed a broad and diverse collaboration network that includes many of the leading researchers worldwide working at the forefront of string algorithms.
-In addition, I have occasionally published in other areas of algorithm design, and I plan to continue exploring problems beyond stringology once in a while when motivated by the interests of group members or external collaborators.
+A central example is approximate pattern matching. This problem models the task of finding a word in a document, but with tolerance for errors: we want to locate all fragments of text that resemble a given pattern, even if a few characters differ due to typos or mutations. Allowing such errors raises a fundamental algorithmic question: does the task become much harder? Classic results showed that when only a very small number of errors are allowed, one can still solve the problem as quickly as exact matching. For larger error rates, however, strong evidence suggests that no such fast solution exists. The precise dividing line between these two regimes has remained elusive. My research has pushed this boundary significantly forward, showing that efficient algorithms extend much further than previously known. Ongoing work continues to close the gap toward the conjectured limits, with the aim of finally settling where the true threshold lies.
 
-As detailed below, my research focuses on fundamental problems in string processing, such as edit distance computation, approximate pattern matching, and text indexing. 
-I study these problems from various perspectives, including fine-grained complexity, dynamic algorithms, computation over compressed data, sublinear and streaming algorithms, and quantum complexity. 
-Working on many closely related questions has been particularly fruitful for me so far: I place strong emphasis on isolating, deeply understanding, and rigorously formalizing the key insights of each project. 
-Over time, this approach steadily enriches the repertoire of tools and techniques available for tackling increasingly complex problems.
+Another key direction concerns lossless data compression. Compression is not only essential for storage and transmission, but increasingly for direct computation: large datasets should ideally remain compressed even while being queried. A prime example is human genomes, which are individually large but highly repetitive across a population. It is possible, in principle, to store such collections in a compressed form while still supporting queries about the sequences, but existing methods are either too slow or too complex, especially when datasets evolve over time (e.g., when new genomes are added). My work seeks both to develop simpler and more practical techniques for such scenarios, and to understand the fundamental trade-offs between how compactly we can store data and how efficiently we can access it.
 
-Despite significant progress in recent years, the directions I outline below continue to present fascinating open questions and unexplored territories. 
-The ongoing projects and future directions described here will shape a large part of my research agenda in the years ahead. At the same time, I expect new opportunities to arise from the discoveries of other groups, the creativity of my collaborators, and the possibilities unveiled by my own work.
-
-\section{Edit Distance Computation}
-Edit distance is the most widely used string similarity measure, defined as the minimum number of character insertions, deletions, and substitutions required to transform one string into another. 
-The classical dynamic-programming algorithm computes the edit distance of two \mbox{length-$n$} strings in $\Oh(n^2)$ time.
-If the distance is bounded by $k$, the running time improves to $\Oh(n+k^2)$. 
-These results are essentially optimal (conditioned on the Orthogonal Vectors Hypothesis), yet edit distance computation remains a rich topic, with deep results and intriguing open problems.
-
-A central direction of research is edit distance approximation. Larger approximation ratios allow for faster algorithms, with running times ranging from subquadratic to near-linear or even sublinear. 
-My contributions in this area include a non-adaptive sublinear-time algorithm with optimal query complexity~\cite{FOCS2022c} and a state-of-the-art adaptive algorithm~\cite{SODA2024a}.
-We also adapted an existing near-linear-time approximation algorithm to the dynamic setting~\cite{FOCS2023c}.
-
-Over the past years, I have also studied generalizations of edit distance suitable for hierarchical data (well-parenthesized sequences and forests). 
-For both Dyck edit distance and tree edit distance, we developed state-of-the-art $\Oh(n+\mathrm{poly}(k))$-time algorithms~\cite{Fried2024,FOCS2022b,STOC2023,KS25}, as well as static and dynamic approximation algorithms~\cite{Das2022,Das2025}.
-
-While refining our tree-edit-distance algorithm, I observed that the underlying approach extends to the weighted setting, where each edit operation has a weight (a real value of at least one) depending on the characters involved.
-Surprisingly, even for strings, this natural variant had seen no progress beyond the $\Oh(nk)$-time algorithm from the 1980s. 
-Our initial $\Oh(n+k^5)$-time algorithm~\cite{STOC2023} broke this barrier for small distances; subsequently, in~\cite{FOCS2023a}, we achieved $\Ohtilde(n+\sqrt{nk^3})$\footnote{The $\Ohtilde(\cdot)$ notation hides polylogarithmic factors, i.e., $\log^c n$ for a constant $c>0$.} time, which improves upon $\Oh(nk)$ for all sublinear values of $k$.
-Although this running time seems artificial, we proved a matching fine-grained lower bound for $\sqrt{n} \le k \le n$.
-
-Technically, the improved weighted-edit-distance algorithm relies on a new tight connection between edit distance and compressibility: in an instance with (weighted) edit distance $k$, the optimal alignment of a character can be determined by considering only a context compressible to size $\Oh(k)$, e.g., using the standard Lempel--Ziv LZ77 method.
-This insight has already proved useful for unweighted edit distance in several computational models:
-We applied it to design a quantum edit-distance algorithm with optimal query complexity $\Ohtilde(\sqrt{nk})$~\cite{SODA2024b}, and a dynamic algorithm maintaining edit distance in $\Ohtilde(k)$ time per update~\cite{GK25}.
-Combined with a few further ideas, the same scheme also resulted in an $\Ohtilde(n+k^2W)$-time static algorithm and an $\Ohtilde(kW^2)$-time dynamic algorithm for edit distance with small integer weights $\{0,\ldots,W\}$~\cite{GK25}.
-
-\paragraph*{Future Directions}
-Efficient approximation remains perhaps the most exciting open question for edit distance: no $3$-approximation in truly subquadratic time is known, yet even a sublinear-time $(1+\epsilon)$-approximation might be achievable (for super-constant distances).
-Closer to my expertise in the low-distance regime, a key question is whether sublinear-time approximations with subpolynomial approximation ratios can be extended beyond $k < \sqrt{n}$. 
-
-A major quest for \emph{exact} edit distance computation is to uncover hardness sources beyond the known reduction from Orthogonal Vectors. 
-While extremely impactful, this reduction does not explain the lack of sublinear-space polynomial-time algorithms, or the absence of very fast parallel and distributed algorithms. 
-Moreover, although the classic dynamic-programming algorithms and the OV-reduction generalize beyond two strings, essentially no other result has been lifted to that setting. 
-Intuitively, modern algorithms exploit the planarity of the alignment graph for two strings, but we lack any formal evidence that this approach is inherently necessary.
-
-The new connections between edit distance and compression motivate further exploration of compressed edit distance, a topic we briefly studied in~\cite{SODA2022b}. 
-Even in the unweighted case, it remains open to establish the complexity in terms of the length $n$, upper bound $k$, and compressed size (e.g., the LZ77 size) $z$.
-Surprisingly, for Hamming distance (allowing only substitutions), large gaps remain even in the unbounded case, that is, for $k=n$.
-
-Our recent work on weighted edit distance revealed unexpectedly rich structure. 
-Important open questions include designing approximation algorithms (currently, only a $\tau$-approximation in $\Ohtilde(n/\tau)$ time is known~\cite{Kus19}), and closing the fine-grained complexity gaps for the exact problem (for $\sqrt[3]{n} < k < \sqrt{n}$ with fractional weights, and for $\sqrt{n/W} < k < n$ with integer weights up to $W=n^{\Omega(1)}$). 
-Weighted edit distance is also closely related to \emph{Dynamic Time Warping} (DTW) used in computational geometry for aligning trajectories.
-In~\cite{BFH24}, we exploited this connection in the dynamic setting (to establish matching upper and lower bounds), but it remains open whether DTW admits an $\Oh(n+\mathrm{poly}(k))$-time algorithm in the unweighted static version.
-My ongoing work suggests conditional lower bounds ruling out such algorithms.
-
-Tree edit distance is another variant that presents several important open problems. 
-Historically, results for this problem often paralleled those for Dyck edit distance with some delay.
-So far, this has not been the case for the $\Omega(n^\omega)$ conditional lower bound for the exact problem, or for an $n^{o(1)}$-factor approximation in $n^{1+o(1)}$ time; I am currently working to achieve the latter.
-
-\section{Approximate Pattern Matching}
-Another major direction of my research is approximate pattern matching, whose decision version asks whether one input string (a text of length $n$) contains a substring similar to another input string (a pattern of length $m$).
-Similarity is typically quantified by an upper bound $k$ on the Hamming or edit distance between the pattern and the sought approximate occurrence. 
-
-My early work focused on streaming algorithms for approximate pattern matching, which operate in limited space and in a single pass over the input. 
-These results include a state-of-the-art exact algorithm for pattern matching with mismatches~\cite{SODA2019}, the first exact streaming algorithm for pattern matching with errors using $\Ohtilde(\mathrm{poly}(k))$ space~\cite{aFOCS2021}, and the state-of-the-art streaming approximation for pattern matching with mismaches~\cite{STOC2020}.
-The latter work~\cite{STOC2020} also inspired the first sublinear-time property tester for pattern matching with mismatches, and our recent follow-up work provides a near-optimal property tester~\cite{JK25}. 
-
-What I would consider my most fruitful line of contributions in approximate pattern matching is a series of works based on a new combinatorial characterization of the set of approximate occurrences, improving and generalizing~\cite{DBLP:conf/soda/BringmannWK19}.
-The first result in this series~\cite{FOCS2020_Charalampopoulos} introduced universal meta-algorithms applicable to multiple settings (compressed, dynamic, etc.) once basic primitives are implemented. 
-In the classic setting, our running times matched the state-of-the-art, including the $\Oh(n+\frac{n}{m}k^4)$-time algorithm for pattern matching with $k$ errors~\cite{DBLP:conf/soda/ColeH98}. 
-By combining new insights with tools from dynamic edit distance (notably, fast multiplication of unit-Monge matrices), we improved this to $\Ohtilde(n+\frac{n}{m}k^{3.5})$~\cite{FOCS2022a}.
-More recently, we extended these techniques to obtain algorithms with almost-optimal quantum query complexity $(nk)^{0.5+o(1)}$~\cite{KNW24,KNW25}
-and, in the classic, compressed, and dynamic settings, to pattern matching with weighted edit distance~\cite{CKW25}.
-We are currently pursuing an $\Ohtilde(n+\frac{n}{m}k^3)$-time algorithm, conjectured to exist for over 25 years~\cite{DBLP:conf/soda/ColeH98}.
-Preliminary progress suggests that we now have all the key ingredients, though formalizing the details remains challenging.
-
-\paragraph*{Future Directions}
-From the hardness perspective, the quadratic fine-grained lower bound for edit distance leaves no hope for an $\Oh(n + \frac{n}{m}k^{2-\epsilon})$-time algorithm for pattern matching with errors.
-Closing the gap between the quadratic and cubic dependence on $k$ remains the ultimate---though highly challenging---goal. 
-As a first step, I aim to study the problem for \emph{typical} rather than worst-case patterns.
-Notably, the algorithm of~\cite{DBLP:conf/soda/ColeH98} already runs in $\Oh(n+\frac{n}{m}k^3)$ time for patterns that avoid certain periodic structures.
-Insights from the recent quantum project~\cite{KNW24} (which relies on a novel $\Ohtilde(\frac{n}{m}k)$-space encoding of all $k$-edit occurrences and their optimal alignments) raise hope for breaking the cubic barrier for patterns whose LZ77 size is much above $k$.
-
-While improving the polynomial dependency on $k$ remains the main challenge, one may also ask whether the $\frac{n}{m}$ factor in the running time is necessary.
-I believe that the $\Omega(n+\frac{n}{m}k^{2-\epsilon})$ lower bound applies across the full parameter range $k \le m \le n$, but I would like to understand whether the upper bound of $\Ohtilde(n+\frac{n}{m}k^3)$ can be improved in the regime $n \gg m$.
-The only result in this direction so far is that the $\Oh(\frac{n}{m})$ term can be replaced by the compressed size of the text (e.g., under LZ77)~\cite{FOCS2020_Charalampopoulos}, which is nevertheless $\Theta(n)$ in the worst case.
-
-A few years ago, powerful sketching techniques for edit distance have emerged~\cite{DBLP:conf/stoc/Bhattacharya023}, reducing the space complexity of streaming pattern matching with $k$ errors to $\Ohtilde(k^2)$~\cite{DBLP:conf/icalp/Bhattacharya023}.
-Follow-up work~\cite{KS24} achieves sketches of size almost linear in $k$, raising hope for a streaming algorithm with comparable space complexity. 
-However, this remains an ambitious goal, as the newest sketches lack efficient construction algorithms.
-Small-space algorithms (with unrestricted read-only random access to the input) provide an intermediate model that may guide the design of future streaming algorithms and improve existing time bounds. 
-Current techniques yield an $\Oh(n\cdot \mathrm{poly}(k))$-time algorithm in $\Ohtilde(k^2)$ space.
-Open questions include achieving $\Oh(n+\frac{n}{m}\cdot \mathrm{poly}(k))$ time in $\Oh(\mathrm{poly}(k))$ space, or $\Oh(n\cdot \mathrm{poly}(k))$ time in $\Ohtilde(k)$ space.
-
-Property testing is another model of computation where pattern matching with mismatches is well understood, based on connections to streaming techniques. 
-Much less is known pattern matching with errors; in particular, designing a sublinear-time tolerant tester remains open.
-\section{Text Indexing}
-Text indexes are data structures representing a text (a long string modeling the entire sequential dataset) so that various queries can be answered efficiently. 
-An example is a pattern-matching query: given a short string (the pattern), determine whether it occurs as a substring of the text.
-
-I have been working on text indexing problems since my undergraduate years. 
-One of my first results was an index for Internal Pattern Matching (IPM) queries~\cite{SODA2015_Kociumaka}, which ask for the exact occurrences of one fragment within another, slightly longer fragment of the text.
-This data structure (derandomized and simplified in a journal version~\cite{KRRW24}) has since found many applications, including in the approximate pattern matching algorithms described above.
-
-The underlying techniques led to the development of \emph{partitioning} and \emph{synchronizing sets}.
-Partitioning sets~\cite{BGP25} have been introduced for the read-only random access model, allowing for efficient sparse suffix sorting and small indexes supporting Longest Common Extension (LCE) queries, which ask for the longest common prefix of two text fragments.
-Synchronizing sets~\cite{STOC2019}, in turn, support $\Oh(n / \log n)$-time Word-RAM construction for texts over constant-sized alphabets, paving the way for $o(n)$-time algorithms for several fundamental problems, including the construction of indexes for constant-time LCE and IPM queries.
-They also allowed for the first sublinear-time implementations of two central procedures in lossless compression of highly repetitive data: Burrows--Wheeler Transform construction~\cite{STOC2019} and Lempel--Ziv (LZ77) factorization~\cite{KK24}. 
-Both achieve $\Oh(n/\sqrt{\log n})$ time, with the bottleneck coming from computational geometry~\cite{CP10}; recent reductions show that geometric barriers are inherent~\cite{KK25}.
-
-Beyond direct algorithmic applications, string synchronizing sets have become key components in text indexes across diverse models: the packed setting~\cite{SODA2023}, the dynamic setting~\cite{STOC2022} (where the text can be updated over time), and the compressed setting~\cite{FOCS2023b} (where the index size must stay close to the size of a given compressed text representation). 
-Other groups have adapted synchronizing sets to yet more contexts, such as quantum algorithms~\cite{DBLP:conf/soda/JinN23}.
-A closely related notion, based on essentially the same efficient construction algorithm, was recently used to develop the first efficient text index that is simultaneously dynamic and compressed~\cite{NT24}.
-
-Compressed text indexes are particularly relevant today, since some of the largest sequential datasets, such as collections of many human genomes, are highly compressible. 
-Another major contribution of mine is the study of \emph{substring complexity}~$\delta$~\cite{RRRS13,TALG_Christiansen}, a new measure of repetitiveness. 
-This measure lower-bounds the output size of all popular dictionary compression algorithms, yet~$\Oh(\delta \log\frac{n}{\delta})$ space suffices for indexes supporting pattern matching~\cite{TIT22} and more powerful queries~\cite{FOCS2023b}. 
-Moreover, substring complexity enjoys useful combinatorial properties, serving as a convenient bridge for comparing established repetitiveness measures. 
-As a flagship result---featured as a Research Highlight in the \emph{Communications of the ACM}~\cite{CACM2022}---we showed that the output sizes of two widely used compressors, LZ77 (used in \texttt{gzip}) and RLBWT (used in \texttt{bzip2}), always differ by a polylogarithmic factors, contrary to a popular belief.
-
-\paragraph*{Future Directions}
-Compressed indexes are highly sensitive to the choice of repetitiveness measure against which their size is benchmarked.
-For substring complexity~$\delta$, we have powerful indexes whose size $\Oh(\delta \log\frac{n}{\delta})$ is proportional to the information-theoretic lower bound~\cite{TIT22,FOCS2023b}.
-For most other measures, however, analogous results remain elusive.  
-For example, even random access queries are poorly understood in terms of the LZ77 factorization size~$z$. 
-Currently, the best-known data structures use $\Oh(z \log n)$ space and answer queries in $\Oh(\log n)$ time. 
-A long-standing open problem is whether an index of size $\Oh(z)$ could support queries in $\Oh(\mathrm{poly}\log n)$ time.
-One possible avenue is to prove that an LZ77-like factorization can avoid long dependency chains, without incurring a significant blowup in size; an analogous result was obtained a few years ago for straight-line grammars, a slightly weaker form of text compression~\cite{GanardiJL21}.
-
-Among the areas of my research, text indexing is arguably the most important from the perspective of applications---both in theoretical computer science and in practice-oriented areas of algorithms engineering and bioinformatics.
-Experimental evaluation~\cite{Dinklage2020} demonstrated that an engineered implementation of the LCE index based on synchronizing sets~\cite{STOC2019} empirically outperforms known alternatives.
-More recent indexes~\cite{STOC2022,FOCS2023b,NT24} are theoretically much more powerful, but their impact has been limited by several issues.
-First, they rely on advanced components that have never been implemented, including geometric data structures that also impose significant polylogarithmic overheads in query times. 
-Second, these indexes are very complex already on their own: their descriptions span over 100 pages~\cite{FOCS2023b}, and in extreme cases over 450 pages~\cite{NT24}. 
-As a result, even theoretical applications of these techniques can be daunting unless one can use one of the main results in a black-box fashion. 
-
-One way to mitigate this difficulty is to design clear intermediate interfaces that hide the technicalities behind manageable abstractions. 
-In the longer term, I hope for major conceptual simplifications and leaner building blocks suited for the specific tasks arising in modern text indexes. 
-A key challenge is that most advanced indexes rely on the principle of local consistency (symmetry-breaking decisions should depend only on small neighborhoods of the characters involved, and in particular be independent of position numbers). 
-Unfortunately, different applications use different instantiations of this principle, sometimes even multiple ones in various parts of the same index. 
-The existence of a unified approach is a particularly intriguing question.
-
-\let\oldthebibliography\thebibliography
-\let\endoldthebibliography\endthebibliography
-\renewenvironment{thebibliography}[1]{
-  \begin{oldthebibliography}{#1}
-    \setlength{\itemsep}{0em}
-    \setlength{\parskip}{0em}
-}
-{
-  \end{oldthebibliography}
-}
-
-{\footnotesize 
-\bibliography{research_statement}
-\bibliographystyle{alphaurl} 
-}
+The Max Planck Institute for Informatics is the natural host for this program. It is a world leader in algorithms and complexity, with deep expertise in areas closely connected to my work, including formal languages, data structures, and bioinformatics. The collaborative environment of the Saarland Informatics Campus offers exceptional opportunities to attract talent and foster interdisciplinary exchange. With Prof. Bringmann’s upcoming move to ETH Zurich, my group would strengthen and expand MPI’s leading role in the fine-grained complexity of string problems. Support for a Max Planck Research Group would allow me to build a cohesive team—recruiting doctoral students and postdoctoral researchers—and to pursue projects at a scale not possible in my current position, complementing the strong network of external collaborators on which I presently rely.
 
 \end{document}
  
