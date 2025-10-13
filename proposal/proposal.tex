@@ -57,7 +57,7 @@ The overarching goal of my research program is to design efficient algorithms an
 This direction lies at the heart of theoretical computer science, yet it also connects to applied areas such as bioinformatics and data mining. 
 The explosive growth of sequential data presents immense challenges motivating new paradigms, while persistent progress in theory yields techniques that allow tackling decades-old open questions.
 
-My agenda focuses on fundamental theoretical problems with strong practical motivation, approached from various angles such as fine-grained complexity, dynamic and streaming algorithms, quantum computing, and computation over compressed data. 
+My agenda focuses on fundamental theoretical problems with strong practical motivation, approached from various angles, including fine-grained complexity, dynamic and streaming algorithms, quantum computing, and computation over compressed data. 
 The long-term vision is to develop a unified toolkit of techniques that can be leveraged to tackle increasingly complex problems. 
 My previous work has already broken long-standing barriers, and a dedicated Max Planck Research Group will enable ambitious projects of larger scale and scope. 
 The program is structured around three interconnected pillars.
@@ -67,36 +67,36 @@ The program is structured around three interconnected pillars.
 Approximate pattern matching asks to identify fragments of a text similar to a given pattern, under a limit of $k$ mismatches or errors. 
 Despite its classical status and many applications, the complexity of both variants remains unresolved. 
 For mismatches, major progress can only be achieved using fast matrix multiplication, and it remains unclear how to exploit it. 
-For errors, we can hope for an $\Ohtilde(n+\tfrac{n}{m}k^{2})$-time\footnote{Henceforth, the $\Ohtilde(\cdot)$ notation hides factors polylogarithmic in the text length $n$ and, where applicable, the pattern length~$m$.} algorithm, but the fastest known algorithm takes $\Ohtilde(n+\tfrac{n}{m}k^{3.5})$ time. 
-It comes from my work~\cite{CKW22}, which improved upon the $\Oh(n+\tfrac{n}{m}k^4)$ bound after 24 years~\cite{CH98}.  
-I believe that we already have the necessary tools to achieve an $\Ohtilde(n+\tfrac{n}{m}k^{3})$-time solution, though the resulting procedure is very complex, and the scale of this project highlights the need for a larger team in the long run. 
+For errors, we can hope for an $\Ohtilde(n+\tfrac{n}{m}k^{2})$-time\footnote{Henceforth, the $\Ohtilde(\cdot)$ notation hides factors polylogarithmic in the text length $n$ and, where applicable, the pattern length~$m$.} algorithm, but the fastest known solution takes $\Ohtilde(n+\tfrac{n}{m}k^{3.5})$ time. 
+It comes from my work~\cite{CKW22}, which improved upon the $\Oh(n+\tfrac{n}{m}k^4)$ bound~\cite{CH98} after 24 years.  
+I believe that we already have the necessary tools to achieve an $\Ohtilde(n+\tfrac{n}{m}k^{3})$-time algorithm, though the resulting procedure is very complex, and the scale of this project highlights the need for a larger team in the long run.
 The ultimate question is to determine the true dependence on $k$, between quadratic and cubic. 
 Preliminary evidence suggests subcubic dependence for most patterns (all but those compressible to size $\Ohtilde(k)$ using Lempel--Ziv factorization).  
 
 A complementary direction is to understand space complexity in the streaming model, where the input is revealed from left to right. 
-For errors, the state-of-the-art complexity of $\Ohtilde(k^2)$~\cite{BK23a} is obtained via reduction to my $\Ohtilde(k)$-space algorithm for the variant with mismatches~\cite{CKP19}. 
+For errors, the state-of-the-art complexity of $\Ohtilde(k^2)$~\cite{BK23b} is obtained via reduction to my $\Ohtilde(k)$-space algorithm for the variant with mismatches~\cite{CKP19}. 
 The long-term goal is to achieve $\Ohtilde(k)$ for edits as well, and recent advances in sketching~\cite{KS24} bring us closer to this target.  
 
 The key ideas behind most of these results arose while studying the problem in non-standard settings (such as quantum, compressed, and communication protocols), and I intend to keep leveraging such perspectives as stepping stones toward settling the fine-grained complexity of approximate pattern matching.
 
 \section{Edit Distance and Related Measures}
 
-The edit distance, the minimum number of edits to transform one string into another, is a canonical similarity measure. 
+The edit distance, the minimum number of edits to transform one string into another, is a canonical string similarity measure. 
 Its fine-grained complexity in the standard setting is well understood, yet many questions remain. 
 In particular, no $3$-approximation runs in truly subquadratic time, but even a $(1+\eps)$-approximation in truly sublinear time may be possible (unless the distance $k$ is subpolynomial in the string length $n$). 
 My contributions include state-of-the-art dynamic~\cite{KMS23} and sublinear-time~\cite{GKKS22} approximations with subpolynomial ratios. 
-Since the running time is sublinear only for $k \lesssim \sqrt{n}$, it is intriguing whether fine-grained complexity hypotheses can separate time and query complexity in the case of larger distances. 
+Since the running time is sublinear only for $k \lesssim \sqrt{n}$, it is intriguing whether fine-grained complexity hypotheses can separate time and query complexity for larger distances. 
 The state-of-the-art superlinear-time approximation for this regime~\cite{AN20} is very complicated and has not been extended in any way.
-I trust that a team member focusing on edit distance approximation will enable further progress, starting from improvements or simplifications of the known algorithm.
+Still, I trust that hiring a team member focusing on edit distance approximation will enable further progress, starting from improvements or simplifications of the known algorithm.
 
 Regarding exact computation, I contributed a near-optimal dynamic algorithm~\cite{GK25} and characterized quantum query complexity. 
-Still, the space complexity and distributed communication complexity remain open. 
+The space complexity and distributed communication complexity, though, remain open. 
 To tackle these questions I plan to explore stronger hardness results. 
 So far, the only lower bound stronger than for the Orthogonal Vectors problem applies to the quantum time~\cite{BPS21} and is not tight.  
 
 Several related similarity measures, such as weighted edit distance, tree edit distance, and dynamic time warping, are also widely used. 
 Nevertheless, their complexity in the standard setting remains unresolved in many regimes. 
-For example, only recently we developed $\Ohtilde(n+\mathrm{poly}(k))$-time algorithms for the first two measures; for dynamic time warping, the existence of such an algorithm is~open.  
+For example, only recently we developed $\Ohtilde(n+\mathrm{poly}(k))$-time algorithms for the first two measures; for dynamic time warping, the existence of such an algorithm is open.  
 
 Overall, the goal of this direction is to understand the fine-grained complexity of computing and approximating edit distance, extending to closely related measures and diverse models of computation.
 
@@ -104,11 +104,11 @@ Overall, the goal of this direction is to understand the fine-grained complexity
 
 Text indexes are data structures that store large sequential datasets so that queries (e.g., how many times a given short pattern occurs) can be answered efficiently. 
 The key goal is to develop indexes whose size does not significantly exceed the size of the underlying dataset, without sacrificing query time. 
-For compressed indexing, the index should remain small even compared to classic compressed representations such as LZ77.  
+In compressed indexing, the index should remain small even compared to classic compressed representations such as LZ77.  
 My work introduced \emph{synchronizing sets}~\cite{KK19}, which became central components of many indexes and enabled progress on long-standing algorithmic problems such as LZ77 factorization~\cite{KK24}.  
 
 One of my strongest results is a compressed index of essentially optimal size supporting suffix array functionality~\cite{KK23}, while another group developed its dynamic counterpart~\cite{NT24}.  
-Despite their theoretical efficiency, optimal-size indexes are currently impractical: they are highly complex and incur large polylogarithmic query times. 
+Despite their theoretical efficiency, these optimal-size indexes are currently impractical: they are highly complex and require relatively large polylogarithmic query times. 
 A priority in this direction is to simplify and optimize these indexes so they can rival slightly larger alternatives with practical implementations.  
 
 Another core direction is to understand optimal trade-offs between index size and query time. 
@@ -120,7 +120,7 @@ The overarching aim is to comprehensively understand time--space trade-offs for 
 \paragraph*{Closing.}
 
 The Max Planck Research Group funding would let me build a small team, with doctoral and postdoctoral researchers working on multiple directions within the program described above. 
-Travel support for conferences, workshops, research visits, and hosting guests will facilitate maintaining and extending my collaboration network, attracting new talent, and increasing the visibility of the program and of the Max Planck Institute for Informatics as a hub for breakthrough research in string algorithms.
+Travel support for conferences, workshops, research visits, and hosting guests will facilitate maintaining and extending my collaboration network, attracting new talent, and increasing the visibility of the program and of the Max Planck Institute for Informatics as a hub for cutting-edge research in string algorithms.
 
 \singlespacing 
 \let\oldthebibliography\thebibliography
