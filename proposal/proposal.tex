@@ -51,10 +51,10 @@
 
 \begin{document}
 \thispagestyle{firststyle}
-Strings are a basic data type in computer science and programming, used to represent diverse objects such as natural language texts, biological sequences, computer files, and time series. 
-The overarching goal of my research program is to design efficient algorithms and data structures for processing strings. 
-This direction lies at the heart of theoretical computer science, yet it also connects to applied areas such as bioinformatics and data mining. 
-The explosive growth of sequential data presents new challenges, while steady theoretical progress continues to yield techniques for tackling decades-old open questions.
+Strings are a basic data type in computer science and programming, used to represent diverse objects such as natural language texts, biological sequences, computer files, and time series.
+The overarching goal of my research program is to design efficient algorithms and data structures for processing strings.
+This direction lies at the heart of theoretical computer science, yet it also connects to applied areas such as bioinformatics and information retrieval.
+The explosive growth of sequential data presents new challenges, while steady theoretical progress continues to provide tools for addressing \mbox{decades-old open questions}.
 
 My agenda focuses on fundamental theoretical problems with strong practical motivation, approached from various angles, including fine-grained complexity, dynamic and streaming algorithms, computation over compressed data, and quantum algorithms.
 The long-term vision is to develop a unified toolkit of techniques that can be leveraged to tackle increasingly complex problems. 
@@ -70,7 +70,7 @@ For errors, we can hope for an $\Ohtilde(n+\tfrac{n}{m}k^{2})$-time\footnote{Hen
 It comes from my work~\cite{CKW22}, which improved upon the $\Oh(n+\tfrac{n}{m}k^4)$ bound~\cite{CH98} after 24 years.  
 I believe that we already have the necessary tools to achieve an $\Ohtilde(n+\tfrac{n}{m}k^{3})$-time algorithm, though the resulting procedure is very complex, and the scale of this project highlights the need for a larger team in the long run.
 The ultimate question is to determine the true dependence on $k$, between quadratic and cubic. 
-Preliminary evidence suggests subcubic dependence for most patterns (all but those compressible to size $\Ohtilde(k)$ using Lempel--Ziv factorization).  
+Preliminary evidence suggests subcubic dependence for almost all realistic patterns (not compressible to size \mbox{$\Ohtilde(k)$ using Lempel--Ziv factorization}). 
 
 A complementary direction is to understand space complexity in the streaming model, where the input is revealed from left to right. 
 For errors, the state-of-the-art complexity of $\Ohtilde(k^2)$~\cite{BK23b} is obtained via reduction to my $\Ohtilde(k)$-space algorithm for the variant with mismatches~\cite{CKP19}. 
@@ -80,18 +80,18 @@ The key ideas behind most of these results arose while studying the problem in n
 
 \section{Edit Distance and Related Measures}
 
-The edit distance, the minimum number of edits to transform one string into another, is a canonical string similarity measure. 
+The edit distance, the minimum number of single-character edits to transform one string into another, is a canonical string similarity measure. 
 Its fine-grained complexity in the standard setting is well understood, yet many questions remain. 
 In particular, no $3$-approximation runs in truly subquadratic time, but even a $(1+\eps)$-approximation in truly sublinear time may be possible (unless the distance $k$ is subpolynomial in the string length $n$).
 My contributions include state-of-the-art dynamic~\cite{KMS23} and sublinear-time~\cite{GKKS22} approximations with subpolynomial ratios. 
-Since the running time is sublinear only for $k \lesssim \sqrt{n}$, it is intriguing whether fine-grained complexity hypotheses can separate time and query complexity for larger distances.
+Since the running time is sublinear only for $k \lesssim \sqrt{n}$, it is intriguing whether fine-grained hypotheses can separate time and query complexity for larger distances.
 The state-of-the-art superlinear-time approximation for this regime~\cite{AN20} is very complicated and has not been extended in any way.
-Still, I am confident that this direction can be pushed significantly further with a collaborative effort and dedicated resources, e.g., a team member focused on approximating edit distance.
+Still, I am confident that this direction can be pushed significantly further with a collaborative effort and dedicated resources, e.g., a team member \mbox{focused on approximating edit distance}.
 
-Regarding exact computation, I contributed a near-optimal dynamic algorithm~\cite{GK25} and characterized quantum query complexity. 
+As for exact computation, I contributed a near-optimal dynamic algorithm~\cite{GK25} and characterized the quantum query complexity. 
 The space complexity and distributed communication complexity, though, remain open. 
-To tackle these questions I plan to explore stronger hardness results. 
-So far, the only lower bound stronger than for the Orthogonal Vectors problem applies to the quantum time~\cite{BPS21} and is not tight.  
+To tackle these questions, I plan to explore new hardness results.
+So far, edit distance is known to be strictly harder than Orthogonal Vectors only \mbox{with respect to quantum time complexity~\cite{BPS21}}.
 
 Several related similarity measures, such as weighted edit distance, tree edit distance, and dynamic time warping, are also widely used. 
 Nevertheless, their complexity in the standard setting remains unresolved in many regimes. 
@@ -106,15 +106,15 @@ The key goal is to develop indexes whose size does not significantly exceed the 
 In compressed indexing, the index should remain small even compared to classic compressed representations such as LZ77.  
 My work introduced \emph{synchronizing sets}~\cite{KK19}, which became central components of many indexes and enabled progress on long-standing algorithmic problems such as LZ77 factorization~\cite{KK24}.  
 
-One of the most powerful indexes are my compressed index of essentially optimal size supporting suffix array functionality~\cite{KK23} and its counterpart for dynamic datasets developed by a group in Japan~\cite{NT24}.  
-Despite their theoretical efficiency, these optimal-size indexes are currently impractical: they are highly complex and require relatively large polylogarithmic query times. 
-A priority in this direction is to simplify and optimize these indexes so they can rival slightly larger alternatives with practical implementations.  
+One of the most powerful indexes are my compressed index of essentially optimal size supporting suffix array functionality~\cite{KK23} and its counterpart for dynamic datasets developed by another group~\cite{NT24}.
+Despite their theoretical efficiency, these optimal-size indexes are currently impractical: they are highly complex and require relatively large polylogarithmic query times.
+A priority in this direction is to simplify and optimize these indexes so they can rival slightly larger alternatives with practical implementations. 
 
 Another core direction is to understand optimal trade-offs between index size and query time. 
 Even for the simplest random access queries, lower bounds are known only for isolated cases, leaving most regimes unexplored. 
 My ongoing work characterizes the optimal random access time when allowing at least slightly more space than the classic compressed representations. Still, two long-standing questions remain, asking for $o(\log n)$ time in grammar-compressed space and $\Oh(\mathrm{poly}\log n)$ time in LZ77 space.  
 
-The overarching aim is to comprehensively understand time--space trade-offs for text indexing, for both compressible and incompressible data, and to bring theoretical progress closer to practice.
+The overarching aim is to fully understand optimal time--space trade-offs for text indexing, for both compressible and incompressible data, and to bring theoretical progress closer to practice.
 
 \paragraph*{Closing.}
 
